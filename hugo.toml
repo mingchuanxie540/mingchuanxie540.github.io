@@ -1,40 +1,274 @@
-baseURL = 'https://mingchuanxie540.github.io/'
-languageCode = 'en'
-title = '我的博客'
-theme = 'hugo-theme-reimu'
+# ========== 🔧 基础配置 ==========
+baseURL = 'https://mingchuanxie540.github.io/'  # ✅ 末尾必须有 /
+languageCode = 'zh-CN'                           # ← 改为 zh-CN（默认语言）
+title = '明传协的博客'                             # ← 改你的博客标题
+theme = ['hugo-theme-reimu']                     # ← 数组格式，兼容性更好
 
-defaultContentLanguage = 'en'
-[languages]
-[languages.en]
-languageName = 'English'
-weight = 1
+# 默认语言（关键！影响首页内容加载）
+defaultContentLanguage = 'zh-CN'                 # ← ✅ 中文优先
+defaultContentLanguageInSubdir = false           # 中文不加 /zh-cn 前缀，路径更简洁
+
+# ========== 🌐 多语言配置（按需启用） ==========
+# 中文（主语言）
 [languages.zh-CN]
-languageName = '简体中文'
-weight = 2
-hasCJKLanguage = true
+  languageName = '简体中文'
+  languageCode = 'zh-CN'
+  weight = 1                                     # 权重最高，默认显示
+  hasCJKLanguage = true
+  title = '明传协的博客'
+  
+  [languages.zh-CN.params]
+    description = '个人技术博客 | Hugo + GitHub Pages + 灵梦主题'
+    keywords = ['博客', '技术', '前端', 'Hugo', 'GitHub', '随笔']
+
+# 英文（可选）
+[languages.en]
+  languageName = 'English'
+  weight = 2
+  title = "Mingchuanxie's Blog"
+  
+  [languages.en.params]
+    description = 'Personal tech blog | Hugo + GitHub Pages + Reimu Theme'
+    keywords = ['blog', 'tech', 'frontend', 'hugo', 'github']
+
+# 繁体中文（可选）
 [languages.zh-TW]
-languageName = '繁體中文'
-weight = 3
-hasCJKLanguage = true
+  languageName = '繁體中文'
+  weight = 3
+  hasCJKLanguage = true
+  title = '明傳協的博客'
+
+# 日语（可选）
 [languages.ja]
-languageName = '日本語'
-weight = 4
-hasCJKLanguage = true
+  languageName = '日本語'
+  weight = 4
+  hasCJKLanguage = true
+  title = '明伝協のブログ'
 
-[markup.goldmark.extensions.passthrough]
-enable = true
-delimiters.block = [["\\[", "\\]"], ["$$", "$$"]]
-delimiters.inline = [["\\(", "\\)"], ["$", "$"]]
+# ========== 🧭 菜单配置（顶部导航） ==========
+[[menu.main]]
+  identifier = 'home'
+  name = '首页'
+  url = '/'
+  weight = 1
+  pre = '<i class="iconfont icon-home"></i>'     # 可选：图标
 
-[markup.highlight]
-guessSyntax = true
-noClasses = false
+[[menu.main]]
+  identifier = 'archives'
+  name = '归档'
+  url = '/archives/'
+  weight = 2
 
+[[menu.main]]
+  identifier = 'categories'
+  name = '分类'
+  url = '/categories/'
+  weight = 3
+
+[[menu.main]]
+  identifier = 'tags'
+  name = '标签'
+  url = '/tags/'
+  weight = 4
+
+[[menu.main]]
+  identifier = 'about'
+  name = '关于'
+  url = '/about/'
+  weight = 5
+
+[[menu.main]]
+  identifier = 'resume'
+  name = '简历'
+  url = '/resume/'
+  weight = 6
+
+# ========== 📝 Markdown 渲染优化 ==========
+[markup]
+  # Goldmark 渲染器（Hugo 默认）
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true                              # ✅ 允许 HTML 标签（用于自定义样式）
+      hardWraps = false
+      xHTML = false
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        delimiters = { 
+          block = [['\\[', '\\]'], ['$$', '$$']], 
+          inline = [['\\(', '\\)'], ['$', '$']] 
+        }
+      [markup.goldmark.extensions.cjk]
+        enable = true                            # ✅ 中文优化：自动处理标点/空格
+      [markup.goldmark.extensions.typographer]
+        enable = true                            # ✅ 智能排版：引号/破折号优化
+  
+  # 代码高亮配置
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true                               # ✅ 显示行号
+    lineNumbersInTable = true
+    noClasses = false
+    style = 'monokai'                            # 代码主题：monokai/Dracula/OneDark/pygments
+    tabWidth = 2
+    anchorLineNos = false
+    hl_Lines = ''
+    hl_inline = false
+
+# ========== 📡 输出格式（搜索/订阅/结构化数据） ==========
 [outputs]
-home = ["Algolia", "HTML", "RSS"]
+  home = ['HTML', 'RSS', 'JSON']                 # ✅ JSON 用于本地搜索
+  section = ['HTML', 'RSS']
+  taxonomy = ['HTML', 'RSS']
+  term = ['HTML', 'RSS']
 
+# Algolia 搜索输出格式（如需启用）
 [outputFormats.Algolia]
-baseName = "algolia"
-isPlainText = true
-mediaType = "application/json"
-notAlternative = true
+  mediaType = 'application/json'
+  baseName = 'algolia'
+  isPlainText = true
+  notAlternative = true
+
+# RSS 优化
+[outputFormats.RSS]
+  mediaType = 'application/rss+xml'
+  baseName = 'feed'
+  rel = 'alternate'
+
+# ========== 🔍 SEO 优化 ==========
+[params]
+  # 基础信息
+  author = '明传协'
+  subtitle = '博丽神社的巫女'
+  description = '记录技术成长与生活点滴'
+  keywords = ['博客', '技术', '前端', '随笔']
+  
+  # Open Graph（社交分享优化）
+  [params.openGraph]
+    enable = true
+    twitterCard = 'summary_large_image'
+    # twitterSite = '@your_twitter'             # 可选
+  
+  # 结构化数据（SEO 增强）
+  [params.structuredData]
+    enable = true
+    type = 'Blog'                                # 或 'Person' / 'Organization'
+  
+  # 站点验证（搜索引擎收录）
+  [params.verification]
+    google = ''                                  # Google Search Console
+    baidu = ''                                   # 百度站长平台
+    bing = ''                                    # Bing Webmaster
+    sogou = ''                                   # 搜狗站长
+
+# ========== ⚡ 性能优化（关键！） ==========
+[build]
+  writeStats = true                              # ✅ 生成构建统计，便于分析优化
+  cachebusters = [{ source = 'assets/watching/**', target = 'css' }]
+
+# 图片处理优化
+[imaging]
+  quality = 85                                   # 图片压缩质量（75-95，平衡清晰度与体积）
+  resampleFilter = 'Lanczos'                     # 重采样算法（更清晰）
+  hint = 'photo'                                 # 优化提示
+  anchor = 'smart'                               # 裁剪锚点
+
+# 资源管道优化（压缩/合并）
+[params.pipeline]
+  disable = false                                # ✅ 启用资源管道
+  [params.pipeline.css]
+    bundle = true                                # 合并 CSS 文件
+    minify = true                                # 压缩 CSS
+  [params.pipeline.js]
+    bundle = true
+    minify = true
+
+# 预加载/预连接优化
+[params.performance]
+  dnsPrefetch = [                                # DNS 预解析（加速第三方资源）
+    'https://cdn.jsdelivr.net',
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com'
+  ]
+  preconnect = [                                 # TCP 预连接
+    'https://cdn.jsdelivr.net'
+  ]
+  prefetch = true                                # ✅ 页面链接预加载
+
+# ========== 🔐 安全配置 ==========
+[params.security]
+  # CSP 内容安全策略（防止 XSS）
+  csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;"
+  
+  # Referrer 策略（保护用户隐私）
+  referrer = 'strict-origin-when-cross-origin'
+  
+  # 外部链接安全
+  externalLinks = { nofollow = true, noreferrer = true }
+
+# ========== 🎨 主题核心参数 ==========
+[params]
+  # 侧边栏配置
+  [params.sidebar]
+    position = 'right'                           # left / right
+    sticky = true                                # 滚动时固定
+    width = '320px'                              # 可选：自定义宽度
+  
+  # 评论系统（推荐 Giscus）
+  [params.comment]
+    enable = true
+    default = 'giscus'
+  
+  [params.giscus]
+    enable = true
+    repo = 'mingchuanxie540/mingchuanxie540.github.io'
+    repoId = ''                                  # ← 在 https://giscus.app/zh-CN 生成
+    category = 'General'
+    categoryId = ''                              # ← 同上生成
+    mapping = 'pathname'
+    strict = 0
+    reactionsEnabled = 1
+    theme = { light = 'light', dark = 'dark' }
+  
+  # 页脚配置
+  [params.footer]
+    since = 2026                                 # ← 改你的建站年份
+    powered = true
+    beian = ''                                   # ICP 备案号（国内服务器必填）
+    custom = 'Theme: hugo-theme-reimu'
+  
+  # 自定义注入（加载自定义 CSS/统计代码）
+  [params.injector]
+    head_end = '<link rel="stylesheet" href="/css/custom.css">'
+    body_end = '''
+      <script>
+        // 自定义脚本，如统计代码
+        // console.log('Blog loaded');
+      </script>
+    '''
+
+# ========== 🗂️ 内容组织优化 ==========
+# 分类/标签/系列权重（控制排序）
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+  series = 'series'
+
+# 默认 Front Matter（新建文章时自动填充）
+[frontmatter]
+  date = ['date', 'publishDate', 'lastmod']
+  expiryDate = ['expiryDate']
+  lastmod = ['lastmod', 'date', 'publishDate']
+  publishDate = ['publishDate', 'date']
+
+# ========== 📦 模块配置（Hugo Module 支持） ==========
+[module]
+  [module.hugoVersion]
+    min = '0.120.0'                              # 最低 Hugo 版本要求
+    extended = true                              # 需要 Extended 版（支持 SCSS）
+  
+  # 主题模块（如果用 Hugo Module 方式安装）
+  [[module.imports]]
+    path = 'github.com/D-Sketon/hugo-theme-reimu'
+    disable = false
