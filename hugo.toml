@@ -107,10 +107,7 @@ defaultContentLanguageInSubdir = false           # 中文 URL 不加 /zh-cn 前�
     # 数学公式支持（KaTeX/MathJax）
     [markup.goldmark.extensions.passthrough]
       enable = true
-      delimiters = { 
-        block = [['\\[', '\\]'], ['$$', '$$']],   # 块级公式：$$...$$ 或 \[...\]
-        inline = [['\\(', '\\)'], ['$', '$']]     # 行内公式：$...$ 或 \(...\)
-      }
+     delimiters = { block = [['\\[', '\\]'], ['$$', '$$']], inline = [['\\(', '\\)'], ['$', '$']] }
     
     # ✅ 中文排版优化：自动处理标点/空格
     [markup.goldmark.extensions.cjk]
