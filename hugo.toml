@@ -1,62 +1,71 @@
-# ========== 🔧 基础配置 ==========
-baseURL = 'https://mingchuanxie540.github.io/'  # ✅ 末尾必须有 /
-languageCode = 'zh-CN'                           # ← 改为 zh-CN（默认语言）
-title = '明传协的博客'                             # ← 改你的博客标题
-theme = ['hugo-theme-reimu']                     # ← 数组格式，兼容性更好
+# =============================================================================
+# 🔧 基础配置（必填）
+# =============================================================================
 
-# 默认语言（关键！影响首页内容加载）
-defaultContentLanguage = 'zh-CN'                 # ← ✅ 中文优先
-defaultContentLanguageInSubdir = false           # 中文不加 /zh-cn 前缀，路径更简洁
+baseURL = 'https://mingchuanxie540.github.io/'  # ✅ 网站地址，末尾必须有 /
+languageCode = 'zh-CN'                           # 默认语言代码
+title = '明传协的博客'                             # 网站标题（显示在浏览器标签页）
+theme = ['hugo-theme-reimu']                     # ✅ 主题名称，必须用数组格式 ['']
 
-# ========== 🌐 多语言配置（按需启用） ==========
-# 中文（主语言）
+# 默认语言设置（影响首页内容加载）
+defaultContentLanguage = 'zh-CN'                 # ✅ 默认显示简体中文
+defaultContentLanguageInSubdir = false           # 中文 URL 不加 /zh-cn 前缀，路径更简洁
+
+# =============================================================================
+# 🌐 多语言配置（按需启用/禁用）
+# =============================================================================
+
+# ── 简体中文（主语言，权重最高） ──
 [languages.zh-CN]
-  languageName = '简体中文'
-  languageCode = 'zh-CN'
-  weight = 1                                     # 权重最高，默认显示
-  hasCJKLanguage = true
-  title = '明传协的博客'
+  languageName = '简体中文'                      # 语言切换器显示的名称
+  languageCode = 'zh-CN'                         # 语言代码
+  weight = 1                                     # 权重：数字越小优先级越高
+  hasCJKLanguage = true                          # ✅ 开启：优化中文标点/换行处理
+  title = '明传协的博客'                          # 该语言下的网站标题
   
-  [languages.zh-CN.params]
-    description = '个人技术博客 | Hugo + GitHub Pages + 灵梦主题'
-    keywords = ['博客', '技术', '前端', 'Hugo', 'GitHub', '随笔']
+  [languages.zh-CN.params]                       # 该语言专属参数
+    description = '个人技术博客 | Hugo + GitHub Pages + 灵梦主题'  # SEO 描述
+    keywords = ['博客', '技术', '前端', 'Hugo', 'GitHub', '随笔']  # SEO 关键词
 
-# 英文（可选）
+# ── 英文（可选，不需要可删除整个 [languages.en] 块） ──
 [languages.en]
   languageName = 'English'
-  weight = 2
+  weight = 2                                     # 权重低于中文，非默认
   title = "Mingchuanxie's Blog"
   
   [languages.en.params]
     description = 'Personal tech blog | Hugo + GitHub Pages + Reimu Theme'
     keywords = ['blog', 'tech', 'frontend', 'hugo', 'github']
 
-# 繁体中文（可选）
+# ── 繁体中文（可选） ──
 [languages.zh-TW]
   languageName = '繁體中文'
   weight = 3
   hasCJKLanguage = true
   title = '明傳協的博客'
 
-# 日语（可选）
+# ── 日语（可选） ──
 [languages.ja]
   languageName = '日本語'
   weight = 4
   hasCJKLanguage = true
   title = '明伝協のブログ'
 
-# ========== 🧭 菜单配置（顶部导航） ==========
+# =============================================================================
+# 🧭 顶部导航菜单配置
+# =============================================================================
+
+# 菜单项格式：[[menu.main]] 表示主菜单的一项
 [[menu.main]]
-  identifier = 'home'
-  name = '首页'
-  url = '/'
-  weight = 1
-  pre = '<i class="iconfont icon-home"></i>'     # 可选：图标
+  identifier = 'home'                            # 唯一标识（用于 CSS/JS 选择）
+  name = '首页'                                   # 显示的文字
+  url = '/'                                      # 跳转链接（/ 表示首页）
+  weight = 1                                     # 排序权重：越小越靠左
 
 [[menu.main]]
   identifier = 'archives'
   name = '归档'
-  url = '/archives/'
+  url = '/archives/'                             # 注意：末尾有 /
   weight = 2
 
 [[menu.main]]
@@ -78,197 +87,197 @@ defaultContentLanguageInSubdir = false           # 中文不加 /zh-cn 前缀，
   weight = 5
 
 [[menu.main]]
-  identifier = 'resume'
+  identifier = 'resume'                          # ✅ 自定义：简历入口
   name = '简历'
   url = '/resume/'
   weight = 6
 
-# ========== 📝 Markdown 渲染优化 ==========
+# =============================================================================
+# 📝 Markdown 渲染配置（代码高亮/数学公式/中文优化）
+# =============================================================================
+
 [markup]
-  # Goldmark 渲染器（Hugo 默认）
+  # Goldmark：Hugo 默认的 Markdown 渲染器
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = true                              # ✅ 允许 HTML 标签（用于自定义样式）
-      hardWraps = false
-      xHTML = false
-    [markup.goldmark.extensions]
-      [markup.goldmark.extensions.passthrough]
-        enable = true
-        delimiters = { 
-          block = [['\\[', '\\]'], ['$$', '$$']], 
-          inline = [['\\(', '\\)'], ['$', '$']] 
-        }
-      [markup.goldmark.extensions.cjk]
-        enable = true                            # ✅ 中文优化：自动处理标点/空格
-      [markup.goldmark.extensions.typographer]
-        enable = true                            # ✅ 智能排版：引号/破折号优化
+      unsafe = true                              # ✅ 允许 HTML 标签（用于自定义样式/嵌入视频）
+      hardWraps = false                          # 不将换行符转为 <br>
+      xHTML = false                              # 输出 HTML5 而非 XHTML
+    
+    # 数学公式支持（KaTeX/MathJax）
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      delimiters = { 
+        block = [['\\[', '\\]'], ['$$', '$$']],   # 块级公式：$$...$$ 或 \[...\]
+        inline = [['\\(', '\\)'], ['$', '$']]     # 行内公式：$...$ 或 \(...\)
+      }
+    
+    # ✅ 中文排版优化：自动处理标点/空格
+    [markup.goldmark.extensions.cjk]
+      enable = true
+    
+    # ✅ 智能排版：引号/破折号/省略号自动美化
+    [markup.goldmark.extensions.typographer]
+      enable = true
   
-  # 代码高亮配置
+  # 代码块高亮配置
   [markup.highlight]
-    codeFences = true
-    guessSyntax = true
+    codeFences = true                            # ✅ 启用 ``` 代码块
+    guessSyntax = true                           # ✅ 自动检测语言（无 language 标签时）
     lineNos = true                               # ✅ 显示行号
-    lineNumbersInTable = true
-    noClasses = false
-    style = 'monokai'                            # 代码主题：monokai/Dracula/OneDark/pygments
-    tabWidth = 2
-    anchorLineNos = false
-    hl_Lines = ''
-    hl_inline = false
+    lineNumbersInTable = true                    # 行号与代码分列（复制时不包含行号）
+    noClasses = false                            # 使用 CSS 类而非内联样式（便于主题定制）
+    style = 'monokai'                            # 代码高亮主题：monokai/Dracula/OneDark/pygments
+    tabWidth = 2                                 # Tab 缩进显示为 2 个空格
+    anchorLineNos = false                        # 行号不可点击跳转
+    hl_Lines = ''                                # 高亮指定行（如 "2-5,10"）
+    hl_inline = false                            # 高亮样式不内联
 
-# ========== 📡 输出格式（搜索/订阅/结构化数据） ==========
+# =============================================================================
+# 📡 输出格式配置（搜索/订阅/结构化数据）
+# =============================================================================
+
 [outputs]
-  home = ['HTML', 'RSS', 'JSON']                 # ✅ JSON 用于本地搜索
-  section = ['HTML', 'RSS']
-  taxonomy = ['HTML', 'RSS']
-  term = ['HTML', 'RSS']
+  # 首页输出格式：
+  home = ['HTML', 'RSS', 'JSON']                 # ✅ JSON 用于本地搜索功能
+  section = ['HTML', 'RSS']                      # 分类/标签页
+  taxonomy = ['HTML', 'RSS']                     # 分类/标签索引页
+  term = ['HTML', 'RSS']                         # 单个分类/标签页
 
-# Algolia 搜索输出格式（如需启用）
+# Algolia 搜索专用输出格式（如需启用云端搜索）
 [outputFormats.Algolia]
-  mediaType = 'application/json'
-  baseName = 'algolia'
-  isPlainText = true
-  notAlternative = true
+  mediaType = 'application/json'                 # 输出 JSON 格式
+  baseName = 'algolia'                           # 生成 algolia.json 文件
+  isPlainText = true                             # 纯文本输出（便于 Algolia 索引）
+  notAlternative = true                          # 不作为备用格式
 
-# RSS 优化
+# RSS 订阅优化
 [outputFormats.RSS]
   mediaType = 'application/rss+xml'
-  baseName = 'feed'
-  rel = 'alternate'
+  baseName = 'feed'                              # 生成 feed.xml（兼容性更好）
+  rel = 'alternate'                              # 标准 RSS 关系属性
 
-# ========== 🔍 SEO 优化 ==========
+# =============================================================================
+# 🔍 全站参数配置（⚠️ 所有 [params] 子项必须合并到一个 [params] 块内！）
+# =============================================================================
+
 [params]
-  # 基础信息
-  author = '明传协'
-  subtitle = '博丽神社的巫女'
-  description = '记录技术成长与生活点滴'
-  keywords = ['博客', '技术', '前端', '随笔']
+  # ── 基础信息 ──
+  author = '明传协'                               # 作者名（显示在文章末尾/侧边栏）
+  subtitle = '博丽神社的巫女'                     # 副标题（支持打字机动画）
+  description = '记录技术成长与生活点滴'          # 网站描述（SEO + 社交分享）
+  keywords = ['博客', '技术', '前端', '随笔']     # 全局关键词（SEO）
   
-  # Open Graph（社交分享优化）
-  [params.openGraph]
+  # ── SEO 增强 ──
+  [params.openGraph]                             # Open Graph（微信/微博/推特分享预览）
+    enable = true                                # ✅ 启用
+    twitterCard = 'summary_large_image'          # 推特卡片类型：summary / summary_large_image
+    # twitterSite = '@your_twitter'             # 可选：你的推特账号
+  
+  [params.structuredData]                        # 结构化数据（搜索引擎理解内容）
     enable = true
-    twitterCard = 'summary_large_image'
-    # twitterSite = '@your_twitter'             # 可选
+    type = 'Blog'                                # 站点类型：Blog / Person / Organization
   
-  # 结构化数据（SEO 增强）
-  [params.structuredData]
-    enable = true
-    type = 'Blog'                                # 或 'Person' / 'Organization'
+  [params.verification]                          # 搜索引擎站长平台验证
+    google = ''                                  # Google Search Console 验证代码
+    baidu = ''                                   # 百度站长平台验证代码
+    bing = ''                                    # Bing Webmaster 验证代码
+    sogou = ''                                   # 搜狗站长验证代码
   
-  # 站点验证（搜索引擎收录）
-  [params.verification]
-    google = ''                                  # Google Search Console
-    baidu = ''                                   # 百度站长平台
-    bing = ''                                    # Bing Webmaster
-    sogou = ''                                   # 搜狗站长
-
-# ========== ⚡ 性能优化（关键！） ==========
-[build]
-  writeStats = true                              # ✅ 生成构建统计，便于分析优化
-  cachebusters = [{ source = 'assets/watching/**', target = 'css' }]
-
-# 图片处理优化
-[imaging]
-  quality = 85                                   # 图片压缩质量（75-95，平衡清晰度与体积）
-  resampleFilter = 'Lanczos'                     # 重采样算法（更清晰）
-  hint = 'photo'                                 # 优化提示
-  anchor = 'smart'                               # 裁剪锚点
-
-# 资源管道优化（压缩/合并）
-[params.pipeline]
-  disable = false                                # ✅ 启用资源管道
-  [params.pipeline.css]
-    bundle = true                                # 合并 CSS 文件
-    minify = true                                # 压缩 CSS
-  [params.pipeline.js]
-    bundle = true
-    minify = true
-
-# 预加载/预连接优化
-[params.performance]
-  dnsPrefetch = [                                # DNS 预解析（加速第三方资源）
-    'https://cdn.jsdelivr.net',
-    'https://fonts.googleapis.com',
-    'https://fonts.gstatic.com'
-  ]
-  preconnect = [                                 # TCP 预连接
-    'https://cdn.jsdelivr.net'
-  ]
-  prefetch = true                                # ✅ 页面链接预加载
-
-# ========== 🔐 安全配置 ==========
-[params.security]
-  # CSP 内容安全策略（防止 XSS）
-  csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;"
-  
-  # Referrer 策略（保护用户隐私）
-  referrer = 'strict-origin-when-cross-origin'
-  
-  # 外部链接安全
-  externalLinks = { nofollow = true, noreferrer = true }
-
-# ========== 🎨 主题核心参数 ==========
-[params]
-  # 侧边栏配置
-  [params.sidebar]
-    position = 'right'                           # left / right
-    sticky = true                                # 滚动时固定
+  # ── 主题核心参数 ──
+  [params.sidebar]                               # 侧边栏配置
+    position = 'right'                           # 位置：left / right（你需要的右边✅）
+    sticky = true                                # ✅ 滚动时固定侧边栏
     width = '320px'                              # 可选：自定义宽度
   
-  # 评论系统（推荐 Giscus）
-  [params.comment]
-    enable = true
-    default = 'giscus'
+  [params.comment]                               # 评论系统全局开关
+    enable = true                                # ✅ 启用评论
+    default = 'giscus'                           # 默认评论系统：giscus / waline / valine
   
-  [params.giscus]
+  [params.giscus]                                # Giscus 配置（基于 GitHub Discussions）
     enable = true
-    repo = 'mingchuanxie540/mingchuanxie540.github.io'
+    repo = 'mingchuanxie540/mingchuanxie540.github.io'  # ← 你的 GitHub 仓库
     repoId = ''                                  # ← 在 https://giscus.app/zh-CN 生成
-    category = 'General'
+    category = 'General'                         # Discussions 分类名
     categoryId = ''                              # ← 同上生成
-    mapping = 'pathname'
-    strict = 0
-    reactionsEnabled = 1
-    theme = { light = 'light', dark = 'dark' }
+    mapping = 'pathname'                         # 用页面路径标识评论（推荐）
+    strict = 0                                   # 严格匹配：0=宽松 / 1=严格
+    reactionsEnabled = 1                         # ✅ 显示表情反应按钮
+    theme = { light = 'light', dark = 'dark' }   # 亮/暗色主题适配
   
-  # 页脚配置
-  [params.footer]
-    since = 2026                                 # ← 改你的建站年份
-    powered = true
+  [params.footer]                                # 页脚配置
+    since = 2026                                 # ← 建站年份（显示 © 2026-2026）
+    powered = true                               # ✅ 显示 "Powered by Hugo"
     beian = ''                                   # ICP 备案号（国内服务器必填）
-    custom = 'Theme: hugo-theme-reimu'
+    custom = 'Theme: hugo-theme-reimu'           # 自定义页脚文字
   
-  # 自定义注入（加载自定义 CSS/统计代码）
-  [params.injector]
-    head_end = '<link rel="stylesheet" href="/css/custom.css">'
-    body_end = '''
+  [params.injector]                              # ✅ 自定义代码注入（统计/自定义样式）
+    head_end = '<link rel="stylesheet" href="/css/custom.css">'  # </head> 前注入
+    body_end = '''                               # </body> 前注入（支持多行）
       <script>
-        // 自定义脚本，如统计代码
-        // console.log('Blog loaded');
+        // 自定义 JavaScript，如统计代码
+        console.log('Blog loaded successfully!');
       </script>
     '''
-
-# ========== 🗂️ 内容组织优化 ==========
-# 分类/标签/系列权重（控制排序）
-[taxonomies]
-  category = 'categories'
-  tag = 'tags'
-  series = 'series'
-
-# 默认 Front Matter（新建文章时自动填充）
-[frontmatter]
-  date = ['date', 'publishDate', 'lastmod']
-  expiryDate = ['expiryDate']
-  lastmod = ['lastmod', 'date', 'publishDate']
-  publishDate = ['publishDate', 'date']
-
-# ========== 📦 模块配置（Hugo Module 支持） ==========
-[module]
-  [module.hugoVersion]
-    min = '0.120.0'                              # 最低 Hugo 版本要求
-    extended = true                              # 需要 Extended 版（支持 SCSS）
   
-  # 主题模块（如果用 Hugo Module 方式安装）
-  [[module.imports]]
+  # ── 性能优化 ──
+  [params.pipeline]                              # 资源管道（压缩/合并）
+    disable = false                              # ✅ 启用资源优化
+    [params.pipeline.css]
+      bundle = true                              # ✅ 合并所有 CSS 文件
+      minify = true                              # ✅ 压缩 CSS（移除空格/注释）
+    [params.pipeline.js]
+      bundle = true
+      minify = true
+  
+  [params.performance]                           # 预加载/预连接优化
+    dnsPrefetch = [                              # DNS 预解析（加速第三方资源）
+      'https://cdn.jsdelivr.net',
+      'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com'
+    ]
+    preconnect = [                               # TCP 预连接（减少握手延迟）
+      'https://cdn.jsdelivr.net'
+    ]
+    prefetch = true                              # ✅ 页面链接预加载（鼠标悬停时）
+  
+  [params.security]                              # 安全配置
+    # CSP 内容安全策略（防止 XSS 攻击）
+    csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com;"
+    # Referrer 策略（保护用户隐私，不泄露来源页）
+    referrer = 'strict-origin-when-cross-origin'
+    # 外部链接安全：自动添加 nofollow + noreferrer
+    externalLinks = { nofollow = true, noreferrer = true }
+
+# =============================================================================
+# ⚙️ 构建与内容组织配置
+# =============================================================================
+
+[build]                                          # 构建过程优化
+  writeStats = true                              # ✅ 生成构建统计文件（便于分析性能）
+  cachebusters = [{ source = 'assets/watching/**', target = 'css' }]  # 文件变更时清除缓存
+
+[imaging]                                        # 图片处理优化
+  quality = 85                                   # 压缩质量：75-95（平衡清晰度与体积）
+  resampleFilter = 'Lanczos'                     # 重采样算法：更清晰（默认 Linear）
+  hint = 'photo'                                 # 优化提示：photo / picture / graphics
+  anchor = 'smart'                               # 裁剪锚点：smart 自动识别人脸/主体
+
+[taxonomies]                                     # 分类/标签/系列的 URL 前缀
+  category = 'categories'                        # 访问 /categories/前端/ 查看前端分类
+  tag = 'tags'                                   # 访问 /tags/Hugo/ 查看 Hugo 标签
+  series = 'series'                              # 系列文章（如教程连载）
+
+[frontmatter]                                    # 文章元数据字段优先级（新建文章时自动填充）
+  date = ['date', 'publishDate', 'lastmod']      # 发布日期：优先用 date 字段
+  expiryDate = ['expiryDate']                    # 过期日期
+  lastmod = ['lastmod', 'date', 'publishDate']   # 最后修改日期
+  publishDate = ['publishDate', 'date']          # 发布时间
+
+[module]                                         # Hugo Module 配置（主题依赖管理）
+  [module.hugoVersion]
+    min = '0.120.0'                              # 最低 Hugo 版本要求（主题兼容）
+    extended = true                              # ✅ 需要 Extended 版（支持 SCSS/图片处理）
+  [[module.imports]]                             # 导入的主题模块
     path = 'github.com/D-Sketon/hugo-theme-reimu'
-    disable = false
+    disable = false                              # ✅ 启用该主题
