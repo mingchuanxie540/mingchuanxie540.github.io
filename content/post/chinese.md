@@ -1,6 +1,6 @@
 ---
-title: 中文測試
-# description: 中文測試
+title: 简历
+# description: 简历
 
 date: 2022-06-09T20:12:52+08:00
 lastmod: 2022-06-09T20:12:52+08:00
@@ -8,8 +8,8 @@ lastmod: 2022-06-09T20:12:52+08:00
 
 This is a Chinese test post.
 # 谢明川
-📧 mingchuan.xie@email.com | 📱 138-XXXX-XXXX | 🌐 GitHub: mingchuanxie540  
-🔗 博客: https://mingchuanxie540.github.io | 📍 苏州工业园区（或注明"可迁移"）
+📧 mingchuan.xie@email.com | 📱 138-XXXX-XXXX | 🌐 GitHub:[ mingchuanxie540  ](https://github.com/mingchuanxie540)
+🔗 博客: https://mingchuanxie540.github.io | 📍 苏州工业园区
 
 ---
 
@@ -100,4 +100,3 @@ This is a Chinese test post.
 5年深耕工业AI，坚信**技术必须扎根产线**。擅长从车间噪音中提炼真问题，用大模型+传统算法组合拳，把老师傅的经验转化为可复用的AI能力。期待加入贵司，用技术助力中国制造智能化升级。
 > 工步他始能詩的，裝進分星海演意學值例道……於財型目古香亮自和這乎？化經溫詩。只賽嚴大一主價世哥受的沒有中年即病行金拉麼河。主小路了種就小為廣不？
 
-*From [亂數假文產生器 - Chinese Lorem Ipsum](http://www.richyli.com/tool/loremipsum/)*
